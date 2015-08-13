@@ -373,10 +373,20 @@ class AjaxProxy
          * Check to see if this is a POST request
          * @todo What should we do for PUTs? Others?
          */
-        if($this->_requestMethod === self::REQUEST_METHOD_POST)
+        if($this->_requestMethod === self::REQUEST_METHOD_POST || $this->_requestMethod === self::REQUEST_METHOD_PUT)
         {
             curl_setopt($curl_handle, CURLOPT_POST, true);
             curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $this->_requestBody);
+        }
+
+        if($this->_requestMethod === self::REQUEST_METHOD_PUT)
+        {
+			curl_setopt($curl_handle, CURLOPT_CUSTOMREQUEST, 'PUT');            
+        }
+
+        if($this->_requestMethod === self::REQUEST_METHOD_DELETE)
+        {
+			curl_setopt($curl_handle, CURLOPT_CUSTOMREQUEST, 'DELETE');            
         }
 
         curl_setopt($curl_handle, CURLOPT_HEADER, true);
